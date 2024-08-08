@@ -13,27 +13,6 @@
             scroll-behavior: smooth;
         }
 
-        /* Spinner styles */
-        #spinner {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border: 8px solid rgba(0, 0, 0, 0.1);
-            border-radius: 50%;
-            border-top: 8px solid #3498db;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            z-index: 9999;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         /* Slide-in animation */
         .slide-in {
             animation: slideIn 0.5s ease-out forwards;
@@ -65,7 +44,7 @@
         <div class="hero-content">
             <h1>Innovative Software Solutions for a Smarter Future</h1>
             <p>Empowering your business with cutting-edge technology.</p>
-            <a href="#services" class="btn" onclick="showSpinner()">Discover More</a>
+            <a href="#services" class="btn">Discover More</a>
         </div>
     </section>
 
@@ -137,16 +116,9 @@
         </div>
     </footer>
 
-    <div id="spinner"></div>
-
     <script>
-        function showSpinner() {
-            document.getElementById('spinner').style.display = 'block';
-        }
-
         document.getElementById('contact-form').addEventListener('submit', function(event) {
             event.preventDefault();
-            showSpinner();
 
             const formData = new FormData(this);
             fetch('{{ url_for("contact") }}', {
@@ -162,7 +134,6 @@
                     showConfirmButton: false,
                     timer: 1500
                 });
-                document.getElementById('spinner').style.display = 'none';
                 document.getElementById('contact-form').reset();
             })
             .catch(() => {
@@ -173,7 +144,6 @@
                     showConfirmButton: false,
                     timer: 1500
                 });
-                document.getElementById('spinner').style.display = 'none';
             });
         });
     </script>
