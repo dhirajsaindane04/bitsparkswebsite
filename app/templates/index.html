@@ -109,7 +109,7 @@
             </form>
         </div>
     </section>
-
+    <div class="menu-icon">&#9776;</div>
     <footer>
         <div class="container">
             <p>&copy; 2024 Bitspark Technologies. All rights reserved.</p>
@@ -146,6 +146,11 @@
                 });
             });
         });
+        // Add this to your existing script section
+        document.querySelector('.menu-icon').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('showing');
+        });
+
     </script>
 
 </body>
