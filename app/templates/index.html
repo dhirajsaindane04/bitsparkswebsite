@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitspark Technologies</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        /* Add smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Spinner styles */
+        #spinner {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 8px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 8px solid #3498db;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            z-index: 9999;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Slide-in animation */
+        .slide-in {
+            animation: slideIn 0.5s ease-out forwards;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <ul>
+                    <li class="logo"><img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Company Logo"></li>
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#services" class="nav-link">Services</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Innovative Software Solutions for a Smarter Future</h1>
+            <p>Empowering your business with cutting-edge technology.</p>
+            <a href="#services" class="btn" onclick="showSpinner()">Discover More</a>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <h2>Our Services</h2>
+            <div class="service-cards">
+                <div class="card slide-in">
+                    <img src="{{ url_for('static', filename='images/service1.jpg') }}" alt="Service 1">
+                    <h3>Website Development</h3>
+                    <p>Transform your online presence with Bitspark Technologies custom web development services. We build responsive, user-friendly websites that stand out in a crowded digital space, helping you connect with your target audience and elevate your brand</p>
+                </div>
+                <div class="card slide-in">
+                    <img src="{{ url_for('static', filename='images/service2.jpg') }}" alt="Service 2">
+                    <h3>Mobile App Development</h3>
+                    <p>Experience the future of mobile technology with Bitspark Technologies. We build innovative, user-friendly apps that drive engagement and offer a competitive edge, combining creativity and technology to deliver solutions that exceed expectations.</p>
+                </div>
+                <div class="card slide-in">
+                    <img src="{{ url_for('static', filename='images/service3.jpg') }}" alt="Service 3">
+                    <h3>Software Development</h3>
+                    <p>Transform your business processes with Bitspark Technologies software development expertise. Our solutions are designed to be intuitive, reliable, and scalable, providing the tools you need to stay ahead in a rapidly evolving digital landscape.</p>
+                </div>
+                <div class="card slide-in">
+                    <img src="{{ url_for('static', filename='images/service4.jpg') }}" alt="Service 4">
+                    <h3>Software Training and Internships</h3>
+                    <p>Enhance your career prospects with Bitspark Technologies targeted software training. Our expert-led courses provide in-depth knowledge and practical skills in software development, helping you stay ahead in a competitive job market and achieve your professional goals.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="portfolio">
+        <div class="container">
+            <h2>About Us</h2>
+            <div class="portfolio-gallery">
+                <p>Bitspark Technologies is dedicated to delivering top-notch software solutions tailored to your specific requirements. We combine technical expertise with a deep understanding of industry trends to develop products that not only solve your problems but also offer a competitive edge. Our commitment to quality and innovation ensures that your software will be both effective and future-proof.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+
+            <form id="contact-form" action="{{ url_for('contact') }}" method="post">
+                <div class="contact-info">
+                    <p><img src="{{ url_for('static', filename='images/call.png') }}" alt="Call us"></p>
+                    <p>+91 9322477501 / +91 9404116099</p><br>
+                </div>
+                <div class="contact-info">
+                    <p><img src="{{ url_for('static', filename='images/email.png') }}" alt="Email us"></p>
+                    <p>bitsparktechnologies@gmail.com</p><br>
+                </div>
+                <div class="contact-info">
+                    <p><img src="{{ url_for('static', filename='images/address.png') }}" alt="Visit us"></p>
+                    <p>10, Lambodar Society, Near Yashwant Tea House, Saubhagya Nagar, KBT Circle Gangapur Road, Nashik-422005</p>
+                </div>
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <textarea name="message" placeholder="Message" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Bitspark Technologies. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div id="spinner"></div>
+
+    <script>
+        function showSpinner() {
+            document.getElementById('spinner').style.display = 'block';
+        }
+
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            showSpinner();
+
+            const formData = new FormData(this);
+            fetch('{{ url_for("contact") }}', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(() => {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    text: 'Your message has been sent',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                document.getElementById('spinner').style.display = 'none';
+                document.getElementById('contact-form').reset();
+            })
+            .catch(() => {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    text: 'Something went wrong',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                document.getElementById('spinner').style.display = 'none';
+            });
+        });
+    </script>
+
+</body>
+
+</html>
