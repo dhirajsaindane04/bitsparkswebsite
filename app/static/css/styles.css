@@ -103,6 +103,7 @@ nav ul li.logo img {
     margin: 20px;
     width: calc(33% - 40px);
     overflow: hidden;
+    transition: all 0.3s ease;
 }
 
 .card img {
@@ -241,19 +242,14 @@ footer p {
         flex-direction: column;
         align-items: center;
     }
-    nav ul li.logo {
-        /* order: -1; Move logo to the top */
-        margin-bottom: 10px;
-    }
     nav ul li.logo img {
         padding-right: 0;
-        margin-left: 50pt;
-        align-items: center;
+        margin-left: 0;
     }
     nav ul li {
         margin: 0 10px;
     }
-    nav ul li a{
+    nav ul li a {
         display: none;
     }
     nav ul {
@@ -270,5 +266,11 @@ footer p {
     .contact form input,
     .contact form textarea {
         width: 100%;
+    }
+
+    /* Adjustments for the cards */
+    .card {
+        width: 100%;  /* Full width for cards on mobile */
+        margin: 10px 0;
     }
 }
