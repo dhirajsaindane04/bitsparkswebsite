@@ -1,16 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-import os
-from dotenv import load_dotenv
-
-# Load environment variables from .env file
-load_dotenv()
 
 # Configuration class
 class Config:
-    SECRET_KEY = os.getenv('SECRET_KEY', 'your_secret_key')  # Use an environment variable
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI', 'postgresql+psycopg2://postgres:postgres@localhost:5433/bitsparks_rockethat')  # Use DATABASE_URI
+    SECRET_KEY = 'your_secret_key'
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://postgres:postgres@localhost:5432/bitsparks'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # Initialize the database
@@ -18,22 +13,20 @@ db = SQLAlchemy()
 
 # Contact model
 class Contact(db.Model):
-    __table_args__ = { "schema": "bitsparkcode" }
     __tablename__ = 'contacts'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), nullable=False)
     message = db.Column(db.Text, nullable=False)
-    sent_time = db.Column(db.Text, nullable=False)
-    orgname = db.Column(db.String(150), nullable=True)
-
+    sent_time = db.Column(db.DateTime, nullable=False)
+    orgname = db.Column(db.String(150), nullable=True)  
 
 # App creation function
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    # Initialize the app with the database
+    # Initialize the app with the database and migration
     db.init_app(app)
 
     # Routes
@@ -74,6 +67,7 @@ def create_app():
             message = request.form.get('message')
             time = datetime.now()
             orgname = "Bitsparks Technologies"
+            
             # Create a new Contact entry
             new_contact = Contact(name=name, email=email, message=message, sent_time=time, orgname=orgname)
 
@@ -88,7 +82,7 @@ def create_app():
 
     return app
 
-# Main entry point for local testing
+# Main entry point
 if __name__ == "__main__":
     app = create_app()
 
@@ -96,9 +90,4 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
 
-    # This is not needed for Vercel; keep for local testing only
     app.run(debug=True)
-
-# Create the Flask app instance and expose it as handler for Vercel
-app = create_app()
-handler = app
