@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import os
 
 # Configuration class
 class Config:
-    SECRET_KEY = 'your_secret_key'
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://postgres:postgres@localhost:5432/bitsparks'
+    SECRET_KEY = os.getenv('SECRET_KEY', 'your_secret_key')  # Use an environment variable
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'postgresql+psycopg2://postgres:postgres@localhost:5432/bitsparks')  # Use DATABASE_URL
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # Initialize the database
@@ -19,8 +20,7 @@ class Contact(db.Model):
     email = db.Column(db.String(120), nullable=False)
     message = db.Column(db.Text, nullable=False)
     sent_time = db.Column(db.Text, nullable=False)
-    orgname = db.Column(db.String(150), nullable=True)  
-
+    orgname = db.Column(db.String(150), nullable=True)
 
 # App creation function
 def create_app():
@@ -69,7 +69,7 @@ def create_app():
             time = datetime.now()
             orgname = "Bitsparks Technologies"
             # Create a new Contact entry
-            new_contact = Contact(name=name, email=email, message=message,sent_time=time, orgname=orgname)
+            new_contact = Contact(name=name, email=email, message=message, sent_time=time, orgname=orgname)
 
             # Save to the database
             db.session.add(new_contact)
@@ -82,7 +82,7 @@ def create_app():
 
     return app
 
-# Main entry point
+# Main entry point for local testing
 if __name__ == "__main__":
     app = create_app()
 
@@ -90,4 +90,9 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
 
-    app.run(debug=True)
+    # This is not needed for Vercel; keep for local testing only
+    # app.run(debug=True)
+
+# Create the Flask app instance and expose it as handler for Vercel
+app = create_app()
+handler = app
