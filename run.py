@@ -2,11 +2,15 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Configuration class
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', 'your_secret_key')  # Use an environment variable
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'postgresql+psycopg2://postgres:postgres@localhost:5432/bitsparks')  # Use DATABASE_URL
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI', 'postgresql://localhost:5432/bitsparks')  # Use DATABASE_URI
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # Initialize the database
@@ -91,7 +95,7 @@ if __name__ == "__main__":
         db.create_all()
 
     # This is not needed for Vercel; keep for local testing only
-    # app.run(debug=True)
+    app.run(debug=True)
 
 # Create the Flask app instance and expose it as handler for Vercel
 app = create_app()

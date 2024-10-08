@@ -1,15 +1,19 @@
 {
   "version": 2,
   "builds": [
-    {
-      "src": "run.py", 
-      "use": "@vercel/python"  
-    }
+      {
+          "src": "run.py",
+          "use": "@vercel/python"
+      }
   ],
   "routes": [
-    {
-      "src": "/(.*)",   
-      "dest": "/run.py" 
-    }
-  ]
+      {
+          "src": "/(.*)",
+          "dest": "/run.py"
+      }
+  ],
+  "env": {
+      "SECRET_KEY": "your_secret_key",
+      "DATABASE_URI": "postgresql+psycopg2://postgres:postgres@localhost:5432/bitsparks"
+  }
 }
