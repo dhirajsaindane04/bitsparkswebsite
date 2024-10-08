@@ -108,7 +108,7 @@ nav ul li.logo img {
 
 .card img {
     width: 100%;
-    height: auto;
+    height: 200px;
 }
 
 .card h3 {
@@ -274,3 +274,22 @@ footer p {
         margin: 10px 0;
     }
 }
+/* Fade-out animation */
+.fade-out {
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+}
+
+.fade-out.fade {
+    opacity: 0;
+}
+a.card {
+    text-decoration: none; /* Removes underline */
+    color: inherit; /* Keeps the text color of the card */
+}
+
+a.card:hover {
+    color: rgb(17, 158, 163); /* Optional: Change color on hover (use company color or any other) */
+    transition: color 0.3s ease; /* Smooth transition effect */
+}
+

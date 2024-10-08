@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask import current_app as app
 
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -12,6 +13,22 @@ def services():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+@app.route('/website-development')
+def website_development():
+    return render_template('website.html')
+
+@app.route('/mobapp-development')
+def mobapp_development():
+    return render_template('mobile.html')
+
+@app.route('/software-development')
+def software_development():
+    return render_template('software.html')
+
+@app.route('/trainings&internships')
+def training_interships():
+    return render_template('training.html')
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():

@@ -52,26 +52,26 @@
         <div class="container">
             <h2>Our Services</h2>
             <div class="service-cards">
-                <div class="card slide-in">
+                <a href="{{ url_for('website_development') }}" class="card slide-in">
                     <img src="{{ url_for('static', filename='images/service1.jpg') }}" alt="Service 1">
                     <h3>Website Development</h3>
-                    <p>Transform your online presence with Bitspark Technologies custom web development services. We build responsive, user-friendly websites that stand out in a crowded digital space, helping you connect with your target audience and elevate your brand</p>
-                </div>
-                <div class="card slide-in">
+                    <p>Transform your online presence with Bitspark Technologies custom web development services. We build responsive, user-friendly websites that stand out in a crowded digital space, helping you connect with your target audience and elevate your brand.</p>
+                </a>
+                <a href="{{ url_for('mobapp_development') }}" class="card slide-in">
                     <img src="{{ url_for('static', filename='images/service2.jpg') }}" alt="Service 2">
                     <h3>Mobile App Development</h3>
                     <p>Experience the future of mobile technology with Bitspark Technologies. We build innovative, user-friendly apps that drive engagement and offer a competitive edge, combining creativity and technology to deliver solutions that exceed expectations.</p>
-                </div>
-                <div class="card slide-in">
+                </a>
+                <a href="{{ url_for('software_development') }}" class="card slide-in">
                     <img src="{{ url_for('static', filename='images/service3.jpg') }}" alt="Service 3">
                     <h3>Software Development</h3>
                     <p>Transform your business processes with Bitspark Technologies software development expertise. Our solutions are designed to be intuitive, reliable, and scalable, providing the tools you need to stay ahead in a rapidly evolving digital landscape.</p>
-                </div>
-                <div class="card slide-in">
+                </a>
+                <a href="{{ url_for('training_interships') }}" class="card slide-in">
                     <img src="{{ url_for('static', filename='images/service4.jpg') }}" alt="Service 4">
                     <h3>Software Training and Internships</h3>
                     <p>Enhance your career prospects with Bitspark Technologies targeted software training. Our expert-led courses provide in-depth knowledge and practical skills in software development, helping you stay ahead in a competitive job market and achieve your professional goals.</p>
-                </div>
+                </a>
             </div>
         </div>
     </section>
@@ -150,6 +150,27 @@
         document.querySelector('.menu-icon').addEventListener('click', function() {
             document.querySelector('nav ul').classList.toggle('showing');
         });
+        document.addEventListener('DOMContentLoaded', function () {
+        const serviceCards = document.querySelectorAll('.card');
+
+        // Loop through all service cards
+        serviceCards.forEach(card => {
+            card.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                // Get the URL from the clicked card
+                const href = this.getAttribute('href');
+
+                // Add the fade-out class for the animation
+                document.body.classList.add('fade-out');
+
+                // Wait for the animation to complete, then navigate to the new page
+                setTimeout(function () {
+                    window.location.href = href;
+                }, 500); // Match the duration of the CSS transition
+            });
+        });
+    });
 
     </script>
 
