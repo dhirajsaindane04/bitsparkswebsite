@@ -9,8 +9,8 @@ load_dotenv()
 
 # Configuration class
 class Config:
-    SECRET_KEY = os.getenv('SECRET_KEY', 'your_secret_key')  # Use an environment variable
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI', 'postgresql+psycopg2://postgres:postgres@localhost:5433/bitsparks_rockethat')  # Use DATABASE_URI
+    SECRET_KEY = os.getenv('SECRET_KEY', 'your_secret_key')  # Use environment variable
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI', 'postgresql+psycopg2://postgres:postgres@localhost:5433/bitsparks_rockethat')  # Use environment variable
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # Initialize the database
@@ -26,7 +26,6 @@ class Contact(db.Model):
     message = db.Column(db.Text, nullable=False)
     sent_time = db.Column(db.Text, nullable=False)
     orgname = db.Column(db.String(150), nullable=True)
-
 
 # App creation function
 def create_app():
@@ -96,7 +95,7 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
 
-    # This is not needed for Vercel; keep for local testing only
+    # For local testing only
     app.run(debug=True)
 
 # Create the Flask app instance and expose it as handler for Vercel
