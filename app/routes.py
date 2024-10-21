@@ -18,7 +18,7 @@ def about():
 def website_development():
     return render_template('website.html')
 
-@app.route('/mobapp-development')
+@app.route('/website-development')
 def mobapp_development():
     return render_template('mobile.html')
 
